@@ -89,3 +89,21 @@ the first.
 | Porting tokens by eye | Copy exact values; verify contrast with `scripts/contrast.py`. |
 
 Sources and licensing notes: [sources.md](references/sources.md).
+
+## Updates
+
+Source: https://github.com/bjblazko/skills (MIT). When this skill loads, run once per session (the check itself limits network calls to once per 7 days; `<skill dir>` is the base directory shown when the skill loads):
+
+```bash
+r=$(git -C "<skill dir>" rev-parse --show-toplevel 2>/dev/null) || { echo "no git clone"; exit 0; }
+s="$r/.git/huepattl-last-update-check"
+[ -n "$(find "$s" -mtime -7 2>/dev/null)" ] && { echo "checked recently"; exit 0; }
+touch "$s"; git -C "$r" fetch -q origin 2>/dev/null && git -C "$r" status -sb | head -1
+```
+
+| Result | Action |
+|---|---|
+| `checked recently`, up to date, or fetch failed (offline) | Continue silently. |
+| `[behind N]` and `git -C <repo> status --porcelain` is empty | `git -C <repo> pull --ff-only`, tell the user in one line what changed (`git -C <repo> log --oneline HEAD@{1}..HEAD`), re-read this SKILL.md. |
+| `[behind N]` with local changes, or `[ahead …, behind …]` | Do not pull. Tell the user and ask how to proceed. |
+| `no git clone` | Mention once that updates come from the URL above; offer to replace the copy with a clone. |
