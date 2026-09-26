@@ -1,0 +1,9 @@
+# Synced from claude.ai by Claude Code — not ours to version
+synced/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
