@@ -31,6 +31,7 @@ Measure, don't guess. Ask, don't assume. Touch only what the task touches.
 - **Short classes and files.** Split a class/file that grows very long along its responsibilities (by domain concept, not arbitrary halves); propose the split and ask before doing it. Do not let new code push an already-large file further; put it in a new cohesive unit instead.
 - **Domain-first structure**: package/folder by business capability (`billing/`, `orders/`), not by technical layer (`controllers/`, `utils/`). Details: `references/principles.md`.
 - No redundancy: duplicate detection; extract on the third repetition, not the second. No premature abstraction.
+- **YAGNI for interfaces**: create an interface only when more than one implementation concretely exists. Details: `references/principles.md`.
 - Smell checklist (god class, feature envy, primitive obsession, magic numbers, boolean flags, dead code) in `references/principles.md`.
 - Dependencies: maintained, non-deprecated, license-compatible, no known CVEs, actually needed (prefer stdlib if trivial).
 - Security basics: secrets scan, vulnerable dependencies.

@@ -20,12 +20,18 @@
 - Duplication that is coincidental (same shape, different reason to change) stays.
 - Do not merge into flag-heavy generic functions; that trades redundancy for complexity.
 
+## Interfaces (YAGNI)
+- In languages with interfaces (Go, Java, Kotlin, TS, C#, ...), create an interface only when more than one implementation concretely exists or is being written in the same task. A merely possible future implementation does not count.
+- One implementation: use the concrete type. Extract the interface later, when the second implementation actually arrives (LSP rename/references make that cheap).
+- Existing single-implementation interfaces: do not remove them unasked; mention them as a finding.
+
 ## Smell checklist
 - God class / long file
 - Feature envy (method mostly uses another object's data)
 - Primitive obsession (raw strings/ints for domain concepts)
 - Magic numbers and strings
 - Boolean flag parameters
+- Interface with a single implementation (speculative abstraction)
 - Long parameter lists (>4): introduce a parameter object
 - Dead code, unused dependencies, commented-out code
 - Swallowed errors, overly broad catch
