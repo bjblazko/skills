@@ -22,6 +22,7 @@
 
 ## Interfaces (YAGNI)
 - In languages with interfaces (Go, Java, Kotlin, TS, C#, ...), create an interface only when more than one implementation concretely exists or is being written in the same task. A merely possible future implementation does not count.
+- Test doubles (mocks, fakes, stubs) do not count as an implementation. Design tests so they do not need an interface: test against the real type with real or in-memory collaborators (httptest server, in-memory/containerized DB, temp dirs), pass behaviour as function values where a seam is needed, or use tooling that doubles concrete types (Mockito/MockK, TS structural typing).
 - One implementation: use the concrete type. Extract the interface later, when the second implementation actually arrives (LSP rename/references make that cheap).
 - Existing single-implementation interfaces: do not remove them unasked; mention them as a finding.
 
