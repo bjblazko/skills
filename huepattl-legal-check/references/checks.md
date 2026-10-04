@@ -37,6 +37,37 @@ Licenses page), release archives, container image (`/usr/share/doc/...`).
 Guard it with a test: every built-in module appears in the credits list and
 has its text.
 
+**"Licenses and thanks" pattern** (the fix to propose; used in Unterlumen and
+CaddyShack):
+
+- `credits.json` beside the web assets, in groups such as *built in*,
+  *programs it calls*, *maps and data*. Per entry: `name`, `version`, `use`
+  (one line: what it does here), `license` (SPDX or plain name), `home`
+  (project website), `text` (path of the embedded license text, or the
+  license URL for data that is not shipped), optional `support` (only after
+  checking it exists, see below), and for vendored assets `files` (the shipped
+  files the entry covers).
+- The license texts as files next to it (`licenses/<name>.txt`), copied from
+  the exact released version; OFL fonts keep `OFL.txt` beside the font files.
+  All embedded in the binary and served (`/licenses/…`); release archives get
+  a `licenses/` folder when they ship more than the binary.
+- An HTML page rendered from the JSON (not a `.txt` dump): an intro naming
+  the project's own license and the no-warranty sentence, then per entry
+  name + version, use, license, and links *Website*, *License text*,
+  *Support the project*. Reached from the app's **About** dialog/page and its
+  footer.
+- **About** says who makes it (name; email only if the owner wants it),
+  links the project website, the product page and the source repository,
+  states what data leaves the machine (or that nothing does), the license and
+  no-warranty statement, and links "Licenses and thanks".
+- Tests: (1) every shipped third-party file / built-in module is covered by
+  an entry — Go: compare `debug.ReadBuildInfo().Deps` with the `module`
+  fields; vendored files: walk `vendor/`, `data/`, `fonts/` and match
+  `files`; (2) every built-in entry has `license`, `home`, `text`, and the
+  text is embedded. Check that each test fails when you add an unlisted file.
+- Trademark note for names the product refers to ("X is a registered
+  trademark of …; not affiliated") on that page when it applies.
+
 **Attribution duties.** OpenStreetMap (ODbL): "© OpenStreetMap contributors"
 on every map — grep `attributionControl: false` and check each instance adds
 its own. Screenshots and videos of maps are "produced works": the credit must

@@ -33,7 +33,10 @@ dates, in [references/law-de-eu.md](references/law-de-eu.md).
    vendored JS/CSS, fonts, icons, data, images) and every tool a container or
    installer carries. Check compatibility *and* notice duties: license texts in
    the binary, the archives, the image, and an in-app list. Attribution duties
-   (e.g. OpenStreetMap/ODbL) on every map, screenshot and video frame.
+   (e.g. OpenStreetMap/ODbL) on every map, screenshot and video frame. The fix
+   for a missing notice is the "Licenses and thanks" pattern in checks.md:
+   an About entry, a page that links each project and its license text, and
+   a test that keeps the list complete.
 3. **Patents** — a free license protects only against the contributors' own
    patents; private use is exempt, distribution is not. Look for codecs (HEVC,
    H.264, AAC) in what *you* distribute, including container images.
