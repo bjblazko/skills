@@ -166,7 +166,13 @@ segment groups and switches are cut from the same stock.
   and draws its own arrow, so it matches the buttons beside it.
 - A switch row gets the control height too, not just its track height.
 - Never mix default and small controls in one row.
-- On touch layouts both sizes grow to the 44 px target.
+- On touch layouts default controls grow to the 44 px target. Small controls
+  keep their 30 px look and get an invisible hit-area extension to 44 px
+  (`::after`, 7 px above and below); growing them visibly makes dense rows
+  heavy and lets controls in adjacent rows touch. Rows that hold small
+  controls are at least 44 px tall, so the extensions do not overlap.
+- Containers of small controls never clip (`overflow: hidden` would cut the
+  extension); round the outer children instead.
 
 ## Components
 
@@ -201,7 +207,13 @@ example, never the label.
 
 **Switches** — the state is readable without color: label the two positions
 ("On/Off", "List/Grid") or show the current state in words next to it. On =
-`confirm` fill.
+`confirm` fill. No frame around a switch: the track is the control and the
+word beside it says the state; a frame per row adds noise to lists.
+
+**Segment groups** — the strong style (`fg` fill on the selected segment) is
+only for the choice that drives the screen, such as the main view switch.
+Secondary choices (week/month, list/grid) use the quiet style: `line`
+borders, unselected `fg-3`, selected `bg-3` fill with `fg` text.
 
 **Lists and tables** — hairline separators or zebra via `bg-2`, not both.
 Numbers right-aligned, tabular, mono. Row height fits a 44 px target on
