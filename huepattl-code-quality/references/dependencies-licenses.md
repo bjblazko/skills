@@ -27,6 +27,14 @@ Also check transitive dependencies with the license tools in the tools files. Th
 ## 5. Security
 `osv-scanner`, `govulncheck`, `npm audit`, OWASP dependency-check. Report known CVEs for the chosen version.
 
+## 6. Upgrading
+- **Find everything that is a dependency**, not only the manifest: the language runtime and toolchain (a stdlib CVE is fixed only by a newer Go/Node/JDK; raise the version the build reads, e.g. `go` in `go.mod`, `.nvmrc`), vendored files (a `vendor/` or `lib/` folder with a version in its name or header), test tooling (Playwright, browsers), base images.
+- **List what is behind**: `go list -m -u all`, `npm outdated`, the registry's latest version for each vendored file.
+- **Read the release notes of every version between the old and the new one** before upgrading — GitHub releases (`gh release view <tag> -R <owner/repo>`), `CHANGELOG.md` in the repository (the published package may not carry it), the project's site. Look for breaking changes, changed defaults, removed files, and changes to behaviour the code relies on (file layout of a vendored build, URLs with new query strings, stricter parsing).
+- **Pinned companions**: some libraries require an exact version of another (a transpiled C library and its libc); keep them as the release notes say.
+- **Upgrade, then prove it**: build, run the full tests, and fix what the notes predicted. A test that only breaks on the new version is updated with the reason, not loosened blindly.
+- **Report** per dependency: old → new, what the notes say that matters here, what changed in the code.
+
 ## Fallbacks
 - Library cannot be resolved (typo, placeholder, private): ask for the exact name/source; do not guess.
 - Context7 unavailable or has no entry: use registry metadata and the project's own docs/changelog, and say the docs check was limited.

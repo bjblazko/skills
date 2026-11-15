@@ -22,8 +22,9 @@ Measure, don't guess. Ask, don't assume. Touch only what the task touches.
 1. **Detect context**: languages, build tool, existing quality configs, test setup, project license (see `references/dependencies-licenses.md`). Unclear license: ask, then record the answer (e.g. in the project CLAUDE.md).
 2. **Pick mode**: new code (apply rules while writing) or refactoring (`references/refactoring.md`: baseline, small steps, before/after metrics).
 3. **Check** touched code with available CLI tools (`references/tools-<lang>.md`). Use the LSP tool for diagnostics, references and safe renames. If a tool is missing: name it, offer to install, fall back to manual review meanwhile.
-4. **Dependencies**: before adding or upgrading any, run the obsolescence + license + vulnerability check. Use Context7 for current docs/deprecations. Name alternatives.
-5. **Report**: findings by severity, each violation as a question or proposal, with numbers (before/after where refactored).
+4. **Dependencies**: before adding or upgrading any, run the obsolescence + license + vulnerability check. Use Context7 for current docs/deprecations. Name alternatives. When upgrading, read the release notes of every version in between (`references/dependencies-licenses.md`, Upgrading); the runtime, vendored files and test tooling count too.
+5. **Security**: on request, before a release, and for any code that takes input from people, files, the network or other programs — `references/security.md` (OWASP Top 10, escaping every HTML sink, arguments of external programs, requests from other sites, served files, headers).
+6. **Report**: findings by severity, each violation as a question or proposal, with numbers (before/after where refactored).
 
 ## What to enforce
 
@@ -34,7 +35,7 @@ Measure, don't guess. Ask, don't assume. Touch only what the task touches.
 - **YAGNI for interfaces**: create an interface only when more than one implementation concretely exists; test doubles do not count. Details: `references/principles.md`.
 - Smell checklist (god class, feature envy, primitive obsession, magic numbers, boolean flags, dead code) in `references/principles.md`.
 - Dependencies: maintained, non-deprecated, license-compatible, no known CVEs, actually needed (prefer stdlib if trivial).
-- Security basics: secrets scan, vulnerable dependencies.
+- Security: every value from outside escaped where it reaches HTML, a shell, SQL or a program's arguments; requests from other sites refused; secrets scan; vulnerable dependencies (details: `references/security.md`).
 
 ## References (load only what is needed)
 
@@ -45,6 +46,7 @@ Measure, don't guess. Ask, don't assume. Touch only what the task touches.
 | `references/tools-go.md`, `tools-js-ts.md`, `tools-web.md`, `tools-jvm.md`, `tools-c-cpp.md`, `tools-generic.md` | CLI commands per language; generic for any other language |
 | `references/dependencies-licenses.md` | adding/upgrading dependencies, license policy |
 | `references/refactoring.md` | refactoring mode |
+| `references/security.md` | security review: OWASP Top 10, input sanitisation, tools and triage |
 
 UI look and feel of HTML/CSS is out of scope here; `huepattl-rams-design` applies.
 
